@@ -1,0 +1,15 @@
+# Xcode
+build/
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode1v3
+
+# macOS
+.DS_Store
+
+# Swift Package Manager
+.build/
+Packages/
+
