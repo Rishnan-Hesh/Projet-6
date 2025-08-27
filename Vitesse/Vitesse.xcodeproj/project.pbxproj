@@ -1,0 +1,83 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXFileReference section */
+		487818F82E5F3FF50043DD49 /* Candidats */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Candidats; sourceTree = "<group>"; };
+		487818F92E5F40200043DD49 /* Login */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Login; sourceTree = "<group>"; };
+		487818FA2E5F40300043DD49 /* Register */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Register; sourceTree = "<group>"; };
+		487818FB2E5F40770043DD49 /* Profile */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Profile; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		487818EF2E5F3DC40043DD49 = {
+			isa = PBXGroup;
+			children = (
+				487818F92E5F40200043DD49 /* Login */,
+				487818FA2E5F40300043DD49 /* Register */,
+				487818F82E5F3FF50043DD49 /* Candidats */,
+				487818FB2E5F40770043DD49 /* Profile */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		487818F02E5F3DC40043DD49 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1630;
+			};
+			buildConfigurationList = 487818F32E5F3DC40043DD49 /* Build configuration list for PBXProject "Vitesse" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 487818EF2E5F3DC40043DD49;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		487818F42E5F3DC40043DD49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3N9T5X39D7;
+			};
+			name = Debug;
+		};
+		487818F52E5F3DC40043DD49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 3N9T5X39D7;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		487818F32E5F3DC40043DD49 /* Build configuration list for PBXProject "Vitesse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				487818F42E5F3DC40043DD49 /* Debug */,
+				487818F52E5F3DC40043DD49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 487818F02E5F3DC40043DD49 /* Project object */;
+}
