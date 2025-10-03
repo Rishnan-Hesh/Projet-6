@@ -12,7 +12,7 @@ let package = Package(
     ],
     targets: [
         
-        .target(
+            .target(
             name: "Candidates"),
         
             .target(

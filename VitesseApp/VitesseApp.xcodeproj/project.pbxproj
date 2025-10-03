@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4806A9EC2E8FE13700E55273 /* Candidates in Frameworks */ = {isa = PBXBuildFile; productRef = 4806A9EB2E8FE13700E55273 /* Candidates */; };
 		4812E2F32E78631C00737943 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F12E78631C00737943 /* ContentView.swift */; };
 		4812E2F42E78631C00737943 /* VitesseAppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F22E78631C00737943 /* VitesseAppMain.swift */; };
 		48F9C09E2E86B49A0074F9CE /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 48F9C09D2E86B49A0074F9CE /* Authentication */; };
-		48F9C0B72E86B9C00074F9CE /* Candidats in Frameworks */ = {isa = PBXBuildFile; productRef = 48F9C0B62E86B9C00074F9CE /* Candidats */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48F9C0B72E86B9C00074F9CE /* Candidats in Frameworks */,
+				4806A9EC2E8FE13700E55273 /* Candidates in Frameworks */,
 				48F9C09E2E86B49A0074F9CE /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,7 +154,7 @@
 			name = VitesseApp;
 			packageProductDependencies = (
 				48F9C09D2E86B49A0074F9CE /* Authentication */,
-				48F9C0B62E86B9C00074F9CE /* Candidats */,
+				4806A9EB2E8FE13700E55273 /* Candidates */,
 			);
 			productName = VitesseApp;
 			productReference = 4812E2C52E78626E00737943 /* VitesseApp.app */;
@@ -599,13 +599,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4806A9EB2E8FE13700E55273 /* Candidates */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Candidates;
+		};
 		48F9C09D2E86B49A0074F9CE /* Authentication */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Authentication;
-		};
-		48F9C0B62E86B9C00074F9CE /* Candidats */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Candidats;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

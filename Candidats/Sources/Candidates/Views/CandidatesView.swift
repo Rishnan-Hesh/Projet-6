@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct Candidate: Identifiable {
-    let id = UUID()
-    let name: String
-    var isFavorite: Bool
+    let id: UUID = UUID()
+       let name: String
+       var isFavorite: Bool
+       var phone: String?
+       var email: String?
+       var linkedInURL: String?
+       var note: String?
 }
 
 struct CandidatesView: View {
     @State private var searchText: String = ""
     @State private var candidates: [Candidate] = [
+        Candidate(name: "Jean Pierre P.", isFavorite: true),
+        Candidate(name: "Jean Michel P.", isFavorite: false),
+        Candidate(name: "Jean Pierre A.", isFavorite: true),
+        Candidate(name: "Jean Michel Z.", isFavorite: false),
+        Candidate(name: "Jean Pierre B.", isFavorite: true),
+        Candidate(name: "Jean Michel M.", isFavorite: false),
         Candidate(name: "Jean Pierre P.", isFavorite: true),
         Candidate(name: "Jean Michel P.", isFavorite: false),
         Candidate(name: "Jean Pierre A.", isFavorite: true),
@@ -22,12 +32,7 @@ struct CandidatesView: View {
             return candidates
         } else {
             return candidates.filter { $0.name.lowercased().contains(searchText.lowercased()) }
-            /*    `$0` représente un élément dans une collection, ici un `Candidate` dans un filtre.
-             •    `name` est la propriété string du candidat.
-             •    `lowercased()` transforme cette chaîne en minuscules, pour rendre la recherche insensible à la casse.
-             •    `contains()` est une méthode Swift qui vérifie si une chaîne (“name” en minuscules) contient une autre chaîne (ici `searchText` en minuscules).
-             •    Elle renvoie un booléen vrai si `searchText` est une sous-chaîne de `name`.
-         En résumé, cela vérifie si le nom du candidat contient le texte cherché, sans tenir compte des majuscules/minuscules, pour filtrer la liste des candidats selon la recherche utilisateur .*/
+            
         }
     }
     
@@ -59,6 +64,20 @@ struct CandidatesView: View {
                         Image(systemName: candidate.isFavorite ? "star.fill" : "star")
                             .foregroundColor(.yellow)
                     }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(.systemBackground))
+                            .shadow(color: Color.black.opacity(0.08), radius: 40, x: 0, y: 1)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color(.separator), lineWidth: 1)
+                            )
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets()) // Pour enlever l’offset par défaut
+                    .padding(.vertical, 5)// Espacement entre les cases
+                    .padding(.horizontal, 5)
                 }
                 .listStyle(PlainListStyle())
             }

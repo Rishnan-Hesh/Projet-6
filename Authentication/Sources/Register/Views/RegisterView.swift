@@ -137,7 +137,7 @@ struct AuthenticationViews: View {
     }
 }
 
-private func customCase(title:String, content:() -> some View) -> some View {
+/*private func customCase(title:String, content:() -> some View) -> some View {
     
 }
 
@@ -157,4 +157,4 @@ struct CustomCase: some View {
                 .stroke(Color.primary, linewidth: 0.5)
                      )
         }
-    }
+    }*/
