@@ -5,7 +5,10 @@
       location = "group:VitesseApp/VitesseApp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Candidats">
+      location = "group:VitesseDomain">
+   </FileRef>
+   <FileRef
+      location = "group:CandidatesPCK">
    </FileRef>
    <FileRef
       location = "container:Authentication">

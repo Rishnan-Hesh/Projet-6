@@ -5,25 +5,29 @@ let package = Package(
     name: "Authentication",
     platforms: [.iOS(.v17)],
     products: [
+        
         .library(
             name: "Authentication",
-            targets: ["Authentication", "Register"]
+            targets: ["Authentication"]
         ),
+    ],
+    dependencies: [
+        .package(path: "../VitesseDomain"),
+        .package(path: "../CandidatesPCK")
     ],
     targets: [
         .target(
-            name: "Authentication"
-        ),
-        .target(
-            name: "Register"
+            name: "Authentication",
+            dependencies: ["VitesseDomain", "CandidatesPCK"]
         ),
         .testTarget(
             name: "AuthenticationTests",
-            dependencies: ["Authentication"]
+            dependencies: ["Authentication", "VitesseDomain", "CandidatesPCK"]
         ),
         .testTarget(
             name: "RegisterTests",
-            dependencies: ["Register"]
-        ),
+            dependencies: ["Authentication", "VitesseDomain", "CandidatesPCK"]
+        )
     ]
 )
+

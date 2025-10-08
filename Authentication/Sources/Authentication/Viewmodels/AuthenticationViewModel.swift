@@ -1,12 +1,13 @@
 import SwiftUI
 import Combine
 
-@available(iOS 13.0, *)
 class AuthenticationViewModel: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
-    
+    @Published var firstName: String = ""
+    @Published var lastName: String = ""
+    @Published var confirmPassword: String = ""
     
     @Published var isLoginEnabled: Bool = false
     @Published var loginErrorMessage: String? = nil

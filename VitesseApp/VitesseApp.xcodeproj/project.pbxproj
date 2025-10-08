@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4806A9EC2E8FE13700E55273 /* Candidates in Frameworks */ = {isa = PBXBuildFile; productRef = 4806A9EB2E8FE13700E55273 /* Candidates */; };
 		4812E2F32E78631C00737943 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F12E78631C00737943 /* ContentView.swift */; };
 		4812E2F42E78631C00737943 /* VitesseAppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F22E78631C00737943 /* VitesseAppMain.swift */; };
-		48F9C09E2E86B49A0074F9CE /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 48F9C09D2E86B49A0074F9CE /* Authentication */; };
+		48C836082E96C4A400380143 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 48C836072E96C4A400380143 /* Authentication */; };
+		48D5CDA02E96DA76007D69F8 /* VitesseDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 48D5CD9F2E96DA76007D69F8 /* VitesseDomain */; };
+		48D5CDA42E970326007D69F8 /* CandidatesPCK in Frameworks */ = {isa = PBXBuildFile; productRef = 48D5CDA32E970326007D69F8 /* CandidatesPCK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,8 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4806A9EC2E8FE13700E55273 /* Candidates in Frameworks */,
-				48F9C09E2E86B49A0074F9CE /* Authentication in Frameworks */,
+				48D5CDA02E96DA76007D69F8 /* VitesseDomain in Frameworks */,
+				48D5CDA42E970326007D69F8 /* CandidatesPCK in Frameworks */,
+				48C836082E96C4A400380143 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,8 +155,9 @@
 			);
 			name = VitesseApp;
 			packageProductDependencies = (
-				48F9C09D2E86B49A0074F9CE /* Authentication */,
-				4806A9EB2E8FE13700E55273 /* Candidates */,
+				48C836072E96C4A400380143 /* Authentication */,
+				48D5CD9F2E96DA76007D69F8 /* VitesseDomain */,
+				48D5CDA32E970326007D69F8 /* CandidatesPCK */,
 			);
 			productName = VitesseApp;
 			productReference = 4812E2C52E78626E00737943 /* VitesseApp.app */;
@@ -599,13 +602,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4806A9EB2E8FE13700E55273 /* Candidates */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Candidates;
-		};
-		48F9C09D2E86B49A0074F9CE /* Authentication */ = {
+		48C836072E96C4A400380143 /* Authentication */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Authentication;
+		};
+		48D5CD9F2E96DA76007D69F8 /* VitesseDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VitesseDomain;
+		};
+		48D5CDA32E970326007D69F8 /* CandidatesPCK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CandidatesPCK;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
