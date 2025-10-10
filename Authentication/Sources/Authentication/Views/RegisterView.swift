@@ -1,22 +1,6 @@
 import SwiftUI
 import VitesseDomain
 
-/*Écran de connexion
- ● Permettre à l'utilisateur de se connecter en utilisant son e-mail et son mot de
- passe.
- Éléments UI
- ● Champs de texte pour :
- ○ E-mail
- ○ Mot de passe
- ● Bouton 'Sign in'
- ● Bouton 'Register' pour naviguer vers l'écran d'inscription
- Actions
- ● Après avoir entré les informations et cliqué sur 'Sign in'
- , l'application doit valider
- les informations et connecter l'utilisateur.
- ● Le clic sur le bouton ‘Register’ doit rediriger l’utilisateur vers la vue de création de
- compte*/
-
 struct RegisterView: View {
     
     @StateObject private var viewModel = AuthenticationViewModel()
@@ -59,7 +43,7 @@ struct RegisterView: View {
                 
                 
             }
-            .padding(.bottom, 80) // Logique pour avoir le meme password
+            .padding(.bottom, 80) // Logique pour avoir le meme password a ajouter ?
             
             
             NavigationLink(destination: AuthenticationView()) { // Destination a renseigner dans l'app

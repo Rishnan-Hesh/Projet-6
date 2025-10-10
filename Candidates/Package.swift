@@ -2,13 +2,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "CandidatesPCK",
+    name: "Candidates",
     platforms: [.iOS(.v17)],
     products: [
         
         .library(
-            name: "CandidatesPCK",
-            targets: ["CandidatesPCK"]),
+            name: "Candidates",
+            targets: ["Candidates"]),
     ],
     
     dependencies: [
@@ -18,18 +18,18 @@ let package = Package(
     targets: [
         
         .target(
-            name: "CandidatesPCK",
+            name: "Candidates",
             dependencies: ["VitesseDomain"]
         ),
         
             .testTarget(
                 name: "CandidateTests",
-                dependencies: ["CandidatesPCK","VitesseDomain"]),
+                dependencies: ["Candidates","VitesseDomain"]),
         
         
             .testTarget(
                 name: "CandidateDetailsTests",
-                dependencies: ["CandidatesPCK","VitesseDomain"]
+                dependencies: ["Candidates","VitesseDomain"]
             )
         
     ]

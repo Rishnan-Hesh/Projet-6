@@ -1,22 +1,6 @@
 import SwiftUI
 import VitesseDomain
-import CandidatesPCK
-
-/*Écran de connexion
- ● Permettre à l'utilisateur de se connecter en utilisant son e-mail et son mot de
- passe.
- Éléments UI
- ● Champs de texte pour :
- ○ E-mail
- ○ Mot de passe
- ● Bouton 'Sign in'
- ● Bouton 'Register' pour naviguer vers l'écran d'inscription
- Actions
- ● Après avoir entré les informations et cliqué sur 'Sign in'
- , l'application doit valider
- les informations et connecter l'utilisateur.
- ● Le clic sur le bouton ‘Register’ doit rediriger l’utilisateur vers la vue de création de
- compte*/
+import Candidates
 
 struct AuthenticationView: View {
     @StateObject private var viewModel = AuthenticationViewModel()
@@ -24,15 +8,15 @@ struct AuthenticationView: View {
     var body: some View {
         VStack {
             Spacer(minLength: 40)
-            // Titre centré
+            
+            //Champs à remplir
             Text("Login")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.bottom, 100)
             
-            // Champs du formulaire
             VStack(alignment: .leading, spacing: 6) {
-                // Email
+                
                 Text("Email/Username")
                     .font(.headline)
                 TextField("test@mail.com", text: $viewModel.email)
@@ -43,8 +27,6 @@ struct AuthenticationView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                 
-    
-                // Password
                 Text("Password")
                     .font(.headline)
                     .padding(.top, 10)
@@ -56,18 +38,18 @@ struct AuthenticationView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                 
-                // Mot de passe oublié
+                // Forgot password
                 Button(action: { /* action mot de passe oublié */ }) {
                     Text("Forgot password?")
                         .font(.footnote)
                         .foregroundColor(.blue)
                 }
-                .padding(.top, 4) // tout petit espace
+                .padding(.top, 4)
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 175)
             
-            // Boutons actions
+            //Sign in and register
             VStack(spacing: 18) {
                 Button(action: { /* logique connexion */ }) {
                     Text("Sign in")

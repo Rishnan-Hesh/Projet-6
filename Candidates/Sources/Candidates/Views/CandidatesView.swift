@@ -25,7 +25,7 @@ public struct CandidatesView: View {
         if searchText.isEmpty {
             return candidates
         } else {
-            return candidates.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return candidates.filter { $0.name.localizedCaseInsensitiveContains(searchText )}
             
         }
     }
@@ -52,7 +52,7 @@ public struct CandidatesView: View {
 
             ScrollView {
                 LazyVStack(spacing: 15) {
-                    ForEach(filteredCandidates) { candidate in
+                    ForEach(filteredCandidates, id: \.name) { candidate in
                         NavigationLink(destination: CandidateDetailsView(candidate: candidate)) {
                             HStack {
                                 Text(candidate.name)

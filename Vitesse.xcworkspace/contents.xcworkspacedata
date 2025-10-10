@@ -8,9 +8,9 @@
       location = "group:VitesseDomain">
    </FileRef>
    <FileRef
-      location = "group:CandidatesPCK">
+      location = "container:Authentication">
    </FileRef>
    <FileRef
-      location = "container:Authentication">
+      location = "group:Candidates">
    </FileRef>
 </Workspace>

@@ -13,20 +13,20 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../VitesseDomain"),
-        .package(path: "../CandidatesPCK")
+        .package(path: "../Candidates")
     ],
     targets: [
         .target(
             name: "Authentication",
-            dependencies: ["VitesseDomain", "CandidatesPCK"]
+            dependencies: ["VitesseDomain", "Candidates"]
         ),
         .testTarget(
             name: "AuthenticationTests",
-            dependencies: ["Authentication", "VitesseDomain", "CandidatesPCK"]
+            dependencies: ["Authentication", "VitesseDomain", "Candidates"]
         ),
         .testTarget(
             name: "RegisterTests",
-            dependencies: ["Authentication", "VitesseDomain", "CandidatesPCK"]
+            dependencies: ["Authentication", "VitesseDomain", "Candidates"]
         )
     ]
 )
