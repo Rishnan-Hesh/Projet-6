@@ -14,28 +14,28 @@ struct RegisterView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 50)
                 
-                CustomCase(title: "First Name") {
+                CandidateCase(title: "First Name") {
                     TextField("John", text: $viewModel.firstName)
                 }
                 
-                CustomCase(title: "Last Name") {
+                CandidateCase(title: "Last Name") {
                     TextField("Doe", text: $viewModel.lastName)
                 }
                 
-                CustomCase(title: "Email") {
+                CandidateCase(title: "Email") {
                     TextField("john.doe@gmail.com", text: $viewModel.email)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                 }
                 
-                CustomCase(title: "Password") {
+                CandidateCase(title: "Password") {
                     SecureField("", text: $viewModel.password)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                 }
                 
-                CustomCase(title: "Confirm Password") {
+                CandidateCase(title: "Confirm Password") {
                     SecureField("", text: $viewModel.confirmPassword)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)

@@ -1,7 +1,7 @@
 import SwiftUI
 import Foundation
 
-public struct CustomCase<Content: View>: View {
+public struct CandidateCase<Content: View>: View {
     let title: String
     let content: Content
     
