@@ -2,10 +2,21 @@ import SwiftUI
 import VitesseDomain
 import Candidates
 
-struct AuthenticationView: View {
+public struct AuthenticationView: View {
     @StateObject private var viewModel = AuthenticationViewModel()
+        var SignInAction: (() -> Void)? = nil
+        var RegisterAction: (() -> Void)? = nil
+        /*var ForgotPasswordAction: (() -> Void)? = nil*/
     
-    var body: some View {
+    public init(
+        SignInAction: (() -> Void)? = nil,
+        RegisterAction: (() -> Void)? = nil
+    ) {
+        self.SignInAction = SignInAction
+        self.RegisterAction = RegisterAction
+    }
+    
+    public var body: some View {
         VStack {
             Spacer(minLength: 40)
             
@@ -39,7 +50,7 @@ struct AuthenticationView: View {
                     .disableAutocorrection(true)
                 
                 // Forgot password
-                Button(action: { /* action mot de passe oublié */ }) {
+                Button(action: { /* ForgotPasswordAction?() */ }) {
                     Text("Forgot password?")
                         .font(.footnote)
                         .foregroundColor(.blue)
@@ -51,33 +62,10 @@ struct AuthenticationView: View {
             
             //Sign in and register
             VStack(spacing: 18) {
-                Button(action: { /* logique connexion */ }) {
-                    Text("Sign in")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 80)
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.primary, lineWidth: 1)
-                        )
-                }
-                
-                
-                Button(action: { /* navigation inscription */ }) {
-                    Text("Register")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 74)
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.primary, lineWidth: 1)
-                        )
-                }
+                AuthenticationButton(title: "Sign in", action: { SignInAction?() })
+                AuthenticationButton(title: "Register", action: { RegisterAction?() })
             }
+
             Spacer(minLength: 40)
         }
         .background(Color.white)
@@ -91,7 +79,10 @@ struct AuthenticationView: View {
 
 
 #Preview {
-    AuthenticationView()
+    AuthenticationView(
+        SignInAction: { print("Sign in tapped") },
+        RegisterAction: { print("Register tapped") }
+    )
 }
 
 

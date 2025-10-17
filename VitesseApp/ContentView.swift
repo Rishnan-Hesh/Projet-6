@@ -1,14 +1,25 @@
 import SwiftUI
+import Authentication
+import Candidates
+import VitesseDomain
 
 struct ContentView: View {
+    @State private var openCandidates = false
+    @State private var openRegister = false
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            AuthenticationView(
+                SignInAction: { openCandidates = true },
+                RegisterAction: { openRegister = true }
+            )
+            .navigationDestination(isPresented: $openCandidates) {
+                CandidatesView()
+            }
+            .navigationDestination(isPresented: $openRegister) {
+                RegisterView()
+            }
         }
-        .padding()
     }
 }
 

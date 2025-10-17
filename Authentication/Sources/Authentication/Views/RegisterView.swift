@@ -1,11 +1,13 @@
 import SwiftUI
 import VitesseDomain
 
-struct RegisterView: View {
+public struct RegisterView: View {
     
     @StateObject private var viewModel = AuthenticationViewModel()
     
-    var body: some View {
+    public init() {}
+    
+   public var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
                 Text("Register")

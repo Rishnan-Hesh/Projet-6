@@ -1,10 +1,15 @@
 import SwiftUI
 import VitesseDomain
 
-struct CandidateDetailsView: View {
-    var candidate: Candidate
+public struct CandidateDetailsView: View {
     
-    var body: some View {
+    public var candidate: Candidate
+    
+    public init(candidate: Candidate) {
+        self.candidate = candidate
+    }
+    
+   public var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             
             ComponentsView(candidate: candidate).headerPart
@@ -37,4 +42,3 @@ struct CandidateDetailsView: View {
             isFavorite: true
         ))
     }
-

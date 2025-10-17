@@ -6,6 +6,7 @@ import VitesseDomain
 // MARK: - Components for CandidateDetailsview
 
 public struct ComponentsView {
+    
     public var candidate: Candidate
     
     public var headerPart: some View {
