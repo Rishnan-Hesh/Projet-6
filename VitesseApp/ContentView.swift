@@ -9,10 +9,7 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            AuthenticationView(
-                SignInAction: { openCandidates = true },
-                RegisterAction: { openRegister = true }
-            )
+            AuthenticationView()
             .navigationDestination(isPresented: $openCandidates) {
                 CandidatesView()
             }

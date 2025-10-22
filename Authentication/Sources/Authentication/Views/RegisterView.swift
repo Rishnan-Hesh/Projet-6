@@ -7,13 +7,13 @@ public struct RegisterView: View {
     
     public init() {}
     
-   public var body: some View {
+    public var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
                 Text("Register")
                     .font(.largeTitle)
                     .bold()
-                    .padding(.top, 40)
+                    .padding(.top, 70)
                     .padding(.bottom, 50)
                 
                 CandidateCase(title: "First Name") {
@@ -59,8 +59,8 @@ public struct RegisterView: View {
                     .foregroundColor(.black)
                     .cornerRadius(8)
             }
-            .padding(.top, 12)
             .padding(.horizontal)
+            .padding(.bottom, 80)
             
             Spacer()
         }
