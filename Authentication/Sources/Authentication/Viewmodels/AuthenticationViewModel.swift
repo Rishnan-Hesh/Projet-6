@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import VitesseDomain
 
 class AuthenticationViewModel: ObservableObject {
     
@@ -12,18 +13,51 @@ class AuthenticationViewModel: ObservableObject {
     @Published var isLoginEnabled: Bool = false
     @Published var loginErrorMessage: String? = nil
     @Published var isLoading: Bool = false
-        
-    func signIn() {
-        
+    @Published var token: String? = nil  // Stockage du toekn
+
+    // MARK: Sign-In, loading, errors and save token
+    @MainActor func signIn() {
         loginErrorMessage = nil
         isLoading = true
         
+        APIService.shared.authenticate(email: email, password: password) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success(let response):
+                    self?.token = response.token
+                    // nav, fetch
+                case .failure:
+                    self?.loginErrorMessage = "Identifiants incorrects ou erreur réseau"
+                }
+            }
+        }
     }
     
+    // MARK: - Register
+    @MainActor func signUp() {
+        loginErrorMessage = nil
+        isLoading = true
+        let registerRequest = RegisterRequest(email: email, password: password, firstName: firstName, lastName: lastName)
+        
+        APIService.shared.registerUser(request: registerRequest) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success:
+                    self?.signIn()
+                    
+                case .failure:
+                    self?.loginErrorMessage = "Erreur lors de la création du compte"
+                }
+            }
+        }
+    }
+    
+    // MARK: - Email Regex
     static func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let pred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return pred.evaluate(with: email)
     }
 }
-

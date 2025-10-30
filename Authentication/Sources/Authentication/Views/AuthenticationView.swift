@@ -85,7 +85,7 @@ public struct AuthenticationView: View {
                 NavigationLink(destination: RegisterView(), isActive: $isShowingRegister) {
                     EmptyView()
                 }
-                NavigationLink(destination: CandidatesView(), isActive: $isLoggedIn) {
+                NavigationLink(destination: CandidatesView(token: <#String#>), isActive: $isLoggedIn) {
                     EmptyView()
                 }
                 }

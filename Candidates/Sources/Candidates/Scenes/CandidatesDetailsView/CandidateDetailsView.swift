@@ -3,30 +3,38 @@ import VitesseDomain
 
 //MARK: - Properties
 public struct CandidateDetailsView: View {
-    @State private var phone: String = "09 12 12 32 32"
-    @State private var email: String = "jeanmichelp@toto.com"
-    @State private var note: String = "Penser à acheter des tomates et des herbes aromatiques."
-    @State private var linkedInUrl: String = "https://www.linkedin.com/"
-    @State private var other: String = ""
+    @State private var firstName: String
+    @State private var lastName: String
+    @State private var email: String
+    @State private var phone: String
+    @State private var note: String
+    @State private var linkedInURL: String
     @State private var isEditing: Bool = false
     
     public var onToggleFavorite: ((Candidate) -> Void)?
+    public var onSave: ((Candidate) -> Void)?
     public var candidate: Candidate
     public var isAdmin: Bool
     
-    public init(candidate: Candidate, onToggleFavorite: ((Candidate) -> Void)? = nil, isAdmin: Bool = false) {
+    public init(candidate: Candidate, onToggleFavorite: ((Candidate) -> Void)? = nil, onSave: ((Candidate) -> Void)? = nil, isAdmin: Bool = false) {
         self.candidate = candidate
         self.onToggleFavorite = onToggleFavorite
+        self.onSave = onSave
         self.isAdmin = isAdmin
+        
+        _firstName = State(initialValue: candidate.firstName)
+        _lastName = State(initialValue: candidate.lastName)
+        _email = State(initialValue: candidate.email)
+        _phone = State(initialValue: candidate.phone ?? "")
+        _note = State(initialValue: candidate.note ?? "")
+        _linkedInURL = State(initialValue: candidate.linkedInURL ?? "")
     }
-    
-    
     
     //MARK: - Body
     public var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             HStack {
-                Text(candidate.name)
+                Text(candidate.firstName)
                     .font(.title2)
                     .fontWeight(.semibold)
                 Spacer()
@@ -83,7 +91,7 @@ public struct CandidateDetailsView: View {
                     .font(.caption)
                 Spacer()
                 if isEditing {
-                    TextField("URL LinkedIn", text: $linkedInUrl)
+                    TextField("URL LinkedIn", text: $linkedInURL)
                         .padding(8)
                         .background(
                             RoundedRectangle(cornerRadius: 8)
@@ -96,7 +104,7 @@ public struct CandidateDetailsView: View {
                         .padding(.horizontal, 90)
                 } else {
                     Button("Go on LinkedIn") {
-                        if let url = URL(string: linkedInUrl) {
+                        if let url = URL(string: linkedInURL) {
                             UIApplication.shared.open(url)
                         }
                     }
@@ -139,26 +147,22 @@ public struct CandidateDetailsView: View {
                 }
             }
             
-            if isEditing {
-                TextField("Other", text: $other)
-                    .padding(8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color(.systemBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
-                    )
-            } else {
-                infoItemsPart(title: "Other", value: other)
-            }
             Spacer()
         }
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(isEditing ? "Done" : "Edit") {
+                Button(isEditing ? "Sauver" : "Modifier") {
+                    if isEditing {
+                        var updated = candidate
+                        updated.firstName = firstName
+                        updated.lastName = lastName
+                        updated.email = email
+                        updated.phone = phone
+                        updated.note = note
+                        updated.linkedInURL = linkedInURL
+                        onSave?(updated)
+                    }
                     isEditing.toggle()
                 }
             }
@@ -166,13 +170,4 @@ public struct CandidateDetailsView: View {
     }
 }
 
-#Preview("Candidate Details") {
-    CandidateDetailsView(
-        candidate: Candidate(
-            name: "Jean Michel",
-            isFavorite: true
-        ),
-        onToggleFavorite: { _ in },
-        isAdmin: true
-    )
-}
+/*Preview()*/

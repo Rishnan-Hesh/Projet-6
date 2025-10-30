@@ -1,21 +1,32 @@
-import SwiftUI
 import Foundation
 
-public struct Candidate: Identifiable {
-    public let id: UUID = UUID()
-    public var name: String
+public struct Candidate: Identifiable, Codable, Equatable {
+    public let id: String
+    public var firstName: String
+    public var lastName: String
+    public var email: String
     public var isFavorite: Bool
     public var phone: String?
-    public var email: String?
-    public var linkedInURL: String?
     public var note: String?
-    
-    public init(name: String, isFavorite: Bool, phone: String? = nil, email: String? = nil, linkedInURL: String? = nil, note: String? = nil) {
-        self.name = name
+    public var linkedInURL: String?
+
+    public init(
+        id: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        isFavorite: Bool,
+        phone: String? = nil,
+        note: String? = nil,
+        linkedInURL: String? = nil
+    ) {
+        self.id = id
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
         self.isFavorite = isFavorite
         self.phone = phone
-        self.email = email
-        self.linkedInURL = linkedInURL
         self.note = note
+        self.linkedInURL = linkedInURL
     }
 }
