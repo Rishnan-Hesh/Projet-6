@@ -1,4 +1,5 @@
 import Foundation
+import VitesseDomain
 
 @MainActor
 public final class APIService {
@@ -8,7 +9,9 @@ public final class APIService {
     private init() { }
     
     // MARK: - User Auth (post)
-    public func authenticate(email: String, password: String, completion: @escaping (Result<AuthResponse, Error>) -> Void) {
+    public func authenticate(
+        email: String, password: String,
+        completion: @escaping @Sendable (Result<AuthResponse, Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("user/auth")
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
@@ -44,7 +47,9 @@ public final class APIService {
     
     
     // MARK: - Get Candidate
-    public func fetchCandidates(token: String, completion: @escaping (Result<[Candidate], Error>) -> Void) {
+    public func fetchCandidates(
+        token: String,
+        completion: @escaping @Sendable (Result<[Candidate], Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("candidate")
         var request = URLRequest(url: endpoint)
         request.httpMethod = "GET"
@@ -77,7 +82,9 @@ public final class APIService {
     
     
     // MARK: - Register
-    public func registerUser(request: RegisterRequest, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func registerUser(
+        request: RegisterRequest,
+        completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("user/register")
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = "POST"
@@ -94,7 +101,10 @@ public final class APIService {
     }
     
     
-    public func deleteCandidate(candidateId: String, token: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func deleteCandidate(
+        candidateId: String,
+        token: String,
+        completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
         guard let url = URL(string: "http://127.0.0.1:8080/candidate/\(candidateId)") else {
             completion(.failure(URLError(.badURL)))
             return
@@ -132,7 +142,8 @@ public final class APIService {
         token: String,
         completion: @escaping @Sendable (Result<Candidate, Error>) -> Void
     ) {
-        guard let url = URL(string: "http://127.0.0.1:8080/candidate/\(candidate.id ?? "")") else {
+        guard let url = URL(string: "http://127.0.0.1:8080/candidate/\(candidate.id)") else {
+
             completion(.failure(URLError(.badURL)))
             return
         }
@@ -140,8 +151,8 @@ public final class APIService {
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try? JSONEncoder().encode(candidate);error
-        
+        request.httpBody = try? JSONEncoder().encode(candidate)
+
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[PUT] Erreur réseau : \(error)")
@@ -166,6 +177,7 @@ public final class APIService {
             }
         }.resume()
     }
+
     
     
     public func createCandidate(

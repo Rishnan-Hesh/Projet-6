@@ -1,5 +1,6 @@
 import SwiftUI
 import VitesseDomain
+import VitesseData
 
 @MainActor
 final class CandidatesViewModel: ObservableObject {
@@ -8,32 +9,24 @@ final class CandidatesViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isEditing: Bool = false
     @Published var searchText: String = ""
-    
     @Published var showFavoritesOnly = false
     @Published var selection = Set<String>()
-    
-    // Filter
+
     var filteredCandidates: [Candidate] {
         var filtered = candidates
-        
         if showFavoritesOnly {
             filtered = filtered.filter { $0.isFavorite }
         }
-        
         if !searchText.isEmpty {
             filtered = filtered.filter { $0.firstName.localizedCaseInsensitiveContains(searchText) }
         }
-        
         return filtered
     }
-    
-    
-    // MARK: - Actions
-    
+
     func toggleEditMode() {
         isEditing.toggle()
     }
-    
+
     func loadCandidates(token: String) {
         isLoading = true
         errorMessage = nil
@@ -49,12 +42,24 @@ final class CandidatesViewModel: ObservableObject {
             }
         }
     }
-    
+
+    // Actor pour la sécurité concurrente (Swift 6)
+    actor FailedIdsStore {
+        private var failedIds: [String] = []
+        func append(_ id: String) {
+            failedIds.append(id)
+        }
+        func getAll() -> [String] {
+            failedIds
+        }
+    }
+
     func deleteCandidates(withIds ids: Set<String>, token: String) {
         isLoading = true
         errorMessage = nil
         let group = DispatchGroup()
-        var failedIds = [String]()
+        let failedIdsStore = FailedIdsStore()
+
         for id in ids {
             group.enter()
             APIService.shared.deleteCandidate(candidateId: id, token: token) { [weak self] result in
@@ -64,23 +69,29 @@ final class CandidatesViewModel: ObservableObject {
                         self?.candidates.removeAll { $0.id == id }
                     }
                 case .failure:
-                    failedIds.append(id)
+                    Task {
+                        await failedIdsStore.append(id)
+                    }
                 }
                 group.leave()
             }
         }
+
         group.notify(queue: .main) { [weak self] in
-            self?.isLoading = false
-            if !failedIds.isEmpty {
-                self?.errorMessage = "Erreur lors de la suppression de certains candidats"
+            Task {
+                let failedIds = await failedIdsStore.getAll()
+                self?.isLoading = false
+                if !failedIds.isEmpty {
+                    self?.errorMessage = "Erreur lors de la suppression de certains candidats"
+                }
             }
         }
     }
-    
+
     func deleteCandidate(withId id: String, token: String) {
         deleteCandidates(withIds: [id], token: token)
     }
-    
+
     func updateCandidate(_ candidate: Candidate, token: String) {
         isLoading = true
         APIService.shared.updateCandidate(candidate: candidate, token: token) { [weak self] result in
@@ -98,7 +109,6 @@ final class CandidatesViewModel: ObservableObject {
         }
     }
 
-    
     func toggleFavorite(for candidate: Candidate, token: String) {
         var updated = candidate
         updated.isFavorite.toggle()
@@ -117,7 +127,7 @@ final class CandidatesViewModel: ObservableObject {
             }
         }
     }
-    
+
     func toggleSelection(_ candidate: Candidate) {
         if selection.contains(candidate.id) {
             selection.remove(candidate.id)
@@ -126,6 +136,7 @@ final class CandidatesViewModel: ObservableObject {
         }
     }
 }
+
     
     // Pas dans la fiche de présentation mais func rédigée au cas oû
     /*func addCandidate(firstName: String, lastName: String, email: String, token: String) {
@@ -149,4 +160,3 @@ final class CandidatesViewModel: ObservableObject {
             }
         }
     }*/
-

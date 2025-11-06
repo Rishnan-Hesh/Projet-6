@@ -5,6 +5,9 @@
       location = "group:VitesseApp/VitesseApp.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:VitesseData">
+   </FileRef>
+   <FileRef
       location = "group:VitesseDomain">
    </FileRef>
    <FileRef

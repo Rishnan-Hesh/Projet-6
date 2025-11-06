@@ -2,6 +2,7 @@ import SwiftUI
 import Authentication
 import Candidates
 import VitesseDomain
+import VitesseData
 
 struct ContentView: View {
     @State private var openCandidates = false
@@ -11,7 +12,7 @@ struct ContentView: View {
         NavigationStack {
             AuthenticationView()
             .navigationDestination(isPresented: $openCandidates) {
-                CandidatesView()
+                CandidatesView(token: "")
             }
             .navigationDestination(isPresented: $openRegister) {
                 RegisterView()

@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		4812E2F32E78631C00737943 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F12E78631C00737943 /* ContentView.swift */; };
 		4812E2F42E78631C00737943 /* VitesseAppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4812E2F22E78631C00737943 /* VitesseAppMain.swift */; };
-		48B2FBD92E9948AD0084398D /* VitesseDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 48B2FBD82E9948AD0084398D /* VitesseDomain */; };
-		48B2FBDB2E9948B00084398D /* Candidates in Frameworks */ = {isa = PBXBuildFile; productRef = 48B2FBDA2E9948B00084398D /* Candidates */; };
-		48C836082E96C4A400380143 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 48C836072E96C4A400380143 /* Authentication */; };
+		4824B4CE2EB514FC008D2D51 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 4824B4CD2EB514FC008D2D51 /* Authentication */; };
+		4824B4D02EB514FC008D2D51 /* Candidates in Frameworks */ = {isa = PBXBuildFile; productRef = 4824B4CF2EB514FC008D2D51 /* Candidates */; };
+		4824B4D42EB514FC008D2D51 /* VitesseDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 4824B4D32EB514FC008D2D51 /* VitesseDomain */; };
+		4824B4FB2EBCEFF4008D2D51 /* VitesseData in Frameworks */ = {isa = PBXBuildFile; productRef = 4824B4FA2EBCEFF4008D2D51 /* VitesseData */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,8 @@
 		4812E2DC2E78626F00737943 /* VitesseAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4812E2F12E78631C00737943 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4812E2F22E78631C00737943 /* VitesseAppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseAppMain.swift; sourceTree = "<group>"; };
+		4824B4C72EB51354008D2D51 /* AccessorySetupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccessorySetupKit.framework; path = System/Library/Frameworks/AccessorySetupKit.framework; sourceTree = SDKROOT; };
+		4824B4C82EB51354008D2D51 /* Accessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accessibility.framework; path = System/Library/Frameworks/Accessibility.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -84,9 +87,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48B2FBDB2E9948B00084398D /* Candidates in Frameworks */,
-				48B2FBD92E9948AD0084398D /* VitesseDomain in Frameworks */,
-				48C836082E96C4A400380143 /* Authentication in Frameworks */,
+				4824B4FB2EBCEFF4008D2D51 /* VitesseData in Frameworks */,
+				4824B4D42EB514FC008D2D51 /* VitesseDomain in Frameworks */,
+				4824B4D02EB514FC008D2D51 /* Candidates in Frameworks */,
+				4824B4CE2EB514FC008D2D51 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +135,8 @@
 		48F9C09C2E86B4840074F9CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4824B4C82EB51354008D2D51 /* Accessibility.framework */,
+				4824B4C72EB51354008D2D51 /* AccessorySetupKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155,9 +161,10 @@
 			);
 			name = VitesseApp;
 			packageProductDependencies = (
-				48C836072E96C4A400380143 /* Authentication */,
-				48B2FBD82E9948AD0084398D /* VitesseDomain */,
-				48B2FBDA2E9948B00084398D /* Candidates */,
+				4824B4CD2EB514FC008D2D51 /* Authentication */,
+				4824B4CF2EB514FC008D2D51 /* Candidates */,
+				4824B4D32EB514FC008D2D51 /* VitesseDomain */,
+				4824B4FA2EBCEFF4008D2D51 /* VitesseData */,
 			);
 			productName = VitesseApp;
 			productReference = 4812E2C52E78626E00737943 /* VitesseApp.app */;
@@ -211,7 +218,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					4812E2C42E78626E00737943 = {
 						CreatedOnToolsVersion = 16.3;
@@ -235,6 +242,8 @@
 			);
 			mainGroup = 4812E2BC2E78626E00737943;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4812E2C62E78626E00737943 /* Products */;
 			projectDirPath = "";
@@ -370,6 +379,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -427,6 +437,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -437,6 +448,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3N9T5X39D7;
@@ -454,6 +466,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JohanTrino.VitesseApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -465,6 +478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3N9T5X39D7;
@@ -482,6 +496,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JohanTrino.VitesseApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -602,17 +617,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		48B2FBD82E9948AD0084398D /* VitesseDomain */ = {
+		4824B4CD2EB514FC008D2D51 /* Authentication */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = VitesseDomain;
+			productName = Authentication;
 		};
-		48B2FBDA2E9948B00084398D /* Candidates */ = {
+		4824B4CF2EB514FC008D2D51 /* Candidates */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Candidates;
 		};
-		48C836072E96C4A400380143 /* Authentication */ = {
+		4824B4D32EB514FC008D2D51 /* VitesseDomain */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Authentication;
+			productName = VitesseDomain;
+		};
+		4824B4FA2EBCEFF4008D2D51 /* VitesseData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VitesseData;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

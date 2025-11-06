@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Candidate: Identifiable, Codable, Equatable {
+public struct Candidate: Identifiable, Codable, Sendable, Equatable {
     public let id: String
     public var firstName: String
     public var lastName: String

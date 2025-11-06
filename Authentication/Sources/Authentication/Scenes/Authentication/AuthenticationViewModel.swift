@@ -1,8 +1,9 @@
 import SwiftUI
 import Combine
 import VitesseDomain
+import VitesseData
 
-class AuthenticationViewModel: ObservableObject {
+final class AuthenticationViewModel: ObservableObject, @unchecked Sendable{
     
     @Published var email: String = ""
     @Published var password: String = ""
@@ -21,13 +22,16 @@ class AuthenticationViewModel: ObservableObject {
         isLoading = true
         
         APIService.shared.authenticate(email: email, password: password) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success(let response):
-                    self?.token = response.token
-                    // nav, fetch
-                case .failure:
+            switch result {
+            case .success(let response):
+                let token = response.token
+                Task { @MainActor in
+                    self?.isLoading = false
+                    self?.token = token
+                }
+            case .failure:
+                Task { @MainActor in
+                    self?.isLoading = false
                     self?.loginErrorMessage = "Identifiants incorrects ou erreur réseau"
                 }
             }

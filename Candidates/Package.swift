@@ -12,24 +12,25 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(path: "../VitesseDomain")
+        .package(path: "../VitesseDomain"),
+        .package(path: "../VitesseData")
     ],
     
     targets: [
         
         .target(
             name: "Candidates",
-            dependencies: ["VitesseDomain"]
+            dependencies: ["VitesseDomain", "VitesseData"]
         ),
         
             .testTarget(
                 name: "CandidateTests",
-                dependencies: ["Candidates","VitesseDomain"]),
+                dependencies: ["Candidates","VitesseDomain","VitesseData"]),
         
         
             .testTarget(
                 name: "CandidateDetailsTests",
-                dependencies: ["Candidates","VitesseDomain"]
+                dependencies: ["Candidates","VitesseDomain","VitesseData"]
             )
         
     ]
