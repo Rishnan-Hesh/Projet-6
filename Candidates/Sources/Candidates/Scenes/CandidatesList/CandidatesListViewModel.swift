@@ -3,30 +3,94 @@ import VitesseDomain
 import VitesseData
 
 @MainActor
-final class CandidatesViewModel: ObservableObject {
+final class CandidatesListViewModel: ObservableObject {
     @Published var candidates: [Candidate] = []
+    @Published var localFavorites: Set<String> = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     @Published var isEditing: Bool = false
     @Published var searchText: String = ""
     @Published var showFavoritesOnly = false
     @Published var selection = Set<String>()
+    @Published var isCreatingCandidate: Bool = false
+    @Published var createCandidateErrorMessage: String? = nil
 
+    @Published var candidateEmail: String = ""
+    @Published var candidateNote: String? = nil
+    @Published var candidateLinkedinURL: String? = nil
+    @Published var candidateFirstName: String = ""
+    @Published var candidateLastName: String = ""
+    @Published var candidatePhone: String = ""
+    
+    //MARK: - CREATE
+    func createCandidate(token: String) {
+        isCreatingCandidate = true
+        createCandidateErrorMessage = nil
+        
+        let newCandidate = Candidate(
+            id: UUID().uuidString,
+            firstName: candidateFirstName,
+            lastName: candidateLastName,
+            email: candidateEmail,
+            phone: candidatePhone,
+            note: candidateNote,
+            linkedInURL: candidateLinkedinURL
+        )
+
+        APIService.shared.createCandidate(candidate: newCandidate, token: token) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isCreatingCandidate = false
+                switch result {
+                case .success(let createdCandidate):
+                    self?.candidates.append(createdCandidate)
+                    self?.candidateEmail = ""
+                    self?.candidateNote = nil
+                    self?.candidateLinkedinURL = nil
+                    self?.candidateFirstName = ""
+                    self?.candidateLastName = ""
+                    self?.candidatePhone = ""
+                case .failure(let error):
+                    self?.createCandidateErrorMessage = "Erreur : \(error.localizedDescription)"
+                }
+            }
+        }
+    }
+    
+    //MARK: - FILTER
     var filteredCandidates: [Candidate] {
         var filtered = candidates
         if showFavoritesOnly {
-            filtered = filtered.filter { $0.isFavorite }
+            filtered = filtered.filter { localFavorites.contains($0.id) }
         }
         if !searchText.isEmpty {
-            filtered = filtered.filter { $0.firstName.localizedCaseInsensitiveContains(searchText) }
+            let search = searchText.lowercased()
+            filtered = filtered.filter {
+                $0.firstName.lowercased().contains(search) ||
+                $0.lastName.lowercased().contains(search) ||
+                ("\($0.firstName) \($0.lastName)").lowercased().contains(search) ||
+                ("\($0.lastName) \($0.firstName)").lowercased().contains(search)
+            }
         }
         return filtered
     }
+
 
     func toggleEditMode() {
         isEditing.toggle()
     }
 
+    func isCandidateFavorite(_ candidate: Candidate) -> Bool {
+        localFavorites.contains(candidate.id)
+    }
+    
+    func toggleFavoriteLocal(for candidate: Candidate) {
+        if localFavorites.contains(candidate.id) {
+            localFavorites.remove(candidate.id)
+        } else {
+            localFavorites.insert(candidate.id)
+        }
+    }
+    
     func loadCandidates(token: String) {
         isLoading = true
         errorMessage = nil
@@ -43,17 +107,7 @@ final class CandidatesViewModel: ObservableObject {
         }
     }
 
-    // Actor pour la sécurité concurrente (Swift 6)
-    actor FailedIdsStore {
-        private var failedIds: [String] = []
-        func append(_ id: String) {
-            failedIds.append(id)
-        }
-        func getAll() -> [String] {
-            failedIds
-        }
-    }
-
+    //MARK: -DELETE
     func deleteCandidates(withIds ids: Set<String>, token: String) {
         isLoading = true
         errorMessage = nil
@@ -91,42 +145,25 @@ final class CandidatesViewModel: ObservableObject {
     func deleteCandidate(withId id: String, token: String) {
         deleteCandidates(withIds: [id], token: token)
     }
-
+    
     func updateCandidate(_ candidate: Candidate, token: String) {
         isLoading = true
+        errorMessage = nil
         APIService.shared.updateCandidate(candidate: candidate, token: token) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {
                 case .success(let updatedCandidate):
-                    if let index = self?.candidates.firstIndex(where: { $0.id == candidate.id }) {
+                    if let index = self?.candidates.firstIndex(where: { $0.id == updatedCandidate.id }) {
                         self?.candidates[index] = updatedCandidate
                     }
                 case .failure:
-                    self?.errorMessage = "Erreur lors de la modification"
+                    self?.errorMessage = "Erreur lors de la mise à jour du candidat"
                 }
             }
         }
     }
 
-    func toggleFavorite(for candidate: Candidate, token: String) {
-        var updated = candidate
-        updated.isFavorite.toggle()
-        isLoading = true
-        APIService.shared.updateCandidate(candidate: updated, token: token) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success(let updatedCandidate):
-                    if let index = self?.candidates.firstIndex(where: { $0.id == candidate.id }) {
-                        self?.candidates[index] = updatedCandidate
-                    }
-                case .failure:
-                    self?.errorMessage = "Erreur lors de la mise à jour du favori"
-                }
-            }
-        }
-    }
 
     func toggleSelection(_ candidate: Candidate) {
         if selection.contains(candidate.id) {
@@ -135,28 +172,14 @@ final class CandidatesViewModel: ObservableObject {
             selection.insert(candidate.id)
         }
     }
-}
 
-    
-    // Pas dans la fiche de présentation mais func rédigée au cas oû
-    /*func addCandidate(firstName: String, lastName: String, email: String, token: String) {
-        let newCandidate = Candidate(
-            id: "", //nil ?
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            isFavorite: false
-        )
-        isLoading = true
-        APIService.shared.createCandidate(candidate: newCandidate, token: token) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success(let createdCandidate):
-                    self?.candidates.append(createdCandidate)
-                case .failure:
-                    self?.errorMessage = "Erreur lors de l'ajout"
-                }
-            }
+    actor FailedIdsStore {
+        private var failedIds: [String] = []
+        func append(_ id: String) {
+            failedIds.append(id)
         }
-    }*/
+        func getAll() -> [String] {
+            failedIds
+        }
+    }
+}

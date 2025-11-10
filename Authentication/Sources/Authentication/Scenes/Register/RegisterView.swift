@@ -3,7 +3,8 @@ import VitesseDomain
 
 public struct RegisterView: View {
     
-    @StateObject private var viewModel = AuthenticationViewModel()
+    @StateObject private var viewModel = RegisterViewModel()
+    @State private var registrationSuccess = false
     
     public init() {}
     
@@ -13,7 +14,7 @@ public struct RegisterView: View {
                 Text("Register")
                     .font(.largeTitle)
                     .bold()
-                    .padding(.top, 70)
+                    .padding(.top, 20)
                     .padding(.bottom, 50)
                 
                 CandidateCase(title: "First Name") {
@@ -45,34 +46,39 @@ public struct RegisterView: View {
                 
                 
             }
-            .padding(.bottom, 80) // Logique pour avoir le meme password a ajouter ?
-            
-            
-            NavigationLink(destination: AuthenticationView()) { // Destination a renseigner dans l'app
-                
-                
-                // Send/save data
-                Text("Create")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color(.systemGray4))
-                    .foregroundColor(.black)
-                    .cornerRadius(8)
-            }
-            .padding(.horizontal)
             .padding(.bottom, 80)
             
-            Spacer()
+            if let error = viewModel.registerErrorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.footnote)
+            }
+            Button("Create Account") {
+                viewModel.signUp { success in
+                    if success {
+                        DispatchQueue.main.async {
+                            registrationSuccess = true
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color(.systemGray4))
+            .foregroundColor(.black)
+            .cornerRadius(8)
+            .disabled(viewModel.isLoading || !viewModel.passwordsMatch)
+            
+            
         }
         .padding(.horizontal, 24)
+        .padding(.top, 50)
+        .navigationDestination(isPresented: $registrationSuccess) {
+            AuthenticationView()
+        }
     }
 }
 
 #Preview {
     RegisterView()
 }
-
-
-/*.onTapGesture {
- self.endEditing(true)  // Dismiss keyboard when tapping outside
- }*/

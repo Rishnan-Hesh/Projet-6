@@ -5,7 +5,6 @@ public struct Candidate: Identifiable, Codable, Sendable, Equatable {
     public var firstName: String
     public var lastName: String
     public var email: String
-    public var isFavorite: Bool
     public var phone: String?
     public var note: String?
     public var linkedInURL: String?
@@ -15,7 +14,6 @@ public struct Candidate: Identifiable, Codable, Sendable, Equatable {
         firstName: String,
         lastName: String,
         email: String,
-        isFavorite: Bool,
         phone: String? = nil,
         note: String? = nil,
         linkedInURL: String? = nil
@@ -24,9 +22,9 @@ public struct Candidate: Identifiable, Codable, Sendable, Equatable {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.isFavorite = isFavorite
         self.phone = phone
         self.note = note
         self.linkedInURL = linkedInURL
     }
 }
+
