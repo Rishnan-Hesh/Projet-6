@@ -3,6 +3,7 @@ import Combine
 import VitesseDomain
 import VitesseData
 
+//MARK: - Properties
 @MainActor
 public protocol AuthenticationServiceProtocol {
     func authenticate(
@@ -24,13 +25,13 @@ final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
     @Published var token: String? = nil
     @Published var isForgotPasswordError: Bool = false
     @Published var isAdmin: Bool = false
-
+    
     private let apiService: AuthenticationServiceProtocol
-
+    
     init(apiService: AuthenticationServiceProtocol = APIService.shared) {
         self.apiService = apiService
     }
-
+    
     // MARK: - SignIn
     func signIn() {
         loginErrorMessage = nil
@@ -53,17 +54,17 @@ final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
             }
         }
     }
-
+    
     // MARK: - Forgot Password
     func forgotPassword() {
         isForgotPasswordError = true
     }
-
+    
     func resetErrors() {
         loginErrorMessage = nil
         isForgotPasswordError = false
     }
-
+    
     // MARK: - Email valide
     static func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"

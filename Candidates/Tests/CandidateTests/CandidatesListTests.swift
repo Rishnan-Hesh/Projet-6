@@ -2,47 +2,6 @@ import XCTest
 import VitesseDomain
 @testable import Candidates
 
-// MARK: - Mock Service conforme au nouveau protocole
-@MainActor
-final class MockCandidateService: CandidateServiceProtocol {
-    var shouldFetchSucceed = true
-    var shouldCreateSucceed = true
-    var shouldDeleteSucceed = true
-    var shouldUpdateSucceed = true
-    var lastCreatedCandidate: Candidate?
-    var lastUpdatedCandidate: Candidate?
-    var lastDeletedIds: [String] = []
-    var candidatesToReturn: [Candidate] = []
-    
-    func fetchCandidates(token: String, completion: @escaping @Sendable (Result<[Candidate], Error>) -> Void) {
-        completion(shouldFetchSucceed ? .success(candidatesToReturn) : .failure(URLError(.badServerResponse)))
-    }
-
-    func createCandidate(candidate: Candidate, token: String, completion: @escaping @Sendable (Result<Candidate, Error>) -> Void) {
-        lastCreatedCandidate = candidate
-        if shouldCreateSucceed {
-            completion(.success(candidate))
-        } else {
-            completion(.failure(URLError(.badServerResponse)))
-        }
-    }
-
-    func deleteCandidate(candidateId: String, token: String, completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
-        lastDeletedIds.append(candidateId)
-        completion(shouldDeleteSucceed ? .success(()) : .failure(URLError(.cannotRemoveFile)))
-    }
-
-    func updateCandidate(candidate: Candidate, token: String, completion: @escaping @Sendable (Result<Candidate, Error>) -> Void) {
-        lastUpdatedCandidate = candidate
-        if shouldUpdateSucceed {
-            completion(.success(candidate))
-        } else {
-            completion(.failure(URLError(.cannotWriteToFile)))
-        }
-    }
-}
-
-// MARK: - Tests CandidatesListViewModel
 @MainActor
 final class CandidatesListViewModelTests: XCTestCase {
     var viewModel: CandidatesListViewModel!
@@ -71,7 +30,15 @@ final class CandidatesListViewModelTests: XCTestCase {
 
     func testFetchCandidatesSuccess() async {
         mockService = MockCandidateService()
-        let candidate = Candidate(id: "id1", firstName: "John", lastName: "Doe", email: "j@email.com", phone: "0612345678", note: nil, linkedInURL: nil)
+        let candidate = Candidate(
+            id: "id1",
+            firstName: "John",
+            lastName: "Doe",
+            email: "j@email.com",
+            phone: "0612345678",
+            note: nil,
+            linkedInURL: nil
+        )
         mockService.candidatesToReturn = [candidate]
         viewModel = CandidatesListViewModel(service: mockService)
 
@@ -149,7 +116,15 @@ final class CandidatesListViewModelTests: XCTestCase {
     func testDeleteCandidate() async {
         mockService = MockCandidateService()
         mockService.shouldDeleteSucceed = true
-        let candidate = Candidate(id: "deleteID", firstName: "ToDelete", lastName: "Guy", email: "", phone: "", note: nil, linkedInURL: nil)
+        let candidate = Candidate(
+            id: "deleteID",
+            firstName: "ToDelete",
+            lastName: "Guy",
+            email: "",
+            phone: "",
+            note: nil,
+            linkedInURL: nil
+        )
         viewModel = CandidatesListViewModel(service: mockService)
         viewModel.candidates = [candidate]
 
@@ -166,11 +141,27 @@ final class CandidatesListViewModelTests: XCTestCase {
     func testUpdateCandidate() async {
         mockService = MockCandidateService()
         mockService.shouldUpdateSucceed = true
-        let candidate = Candidate(id: "updateId", firstName: "Init", lastName: "User", email: "", phone: "", note: nil, linkedInURL: nil)
+        let candidate = Candidate(
+            id: "updateId",
+            firstName: "Init",
+            lastName: "User",
+            email: "",
+            phone: "",
+            note: nil,
+            linkedInURL: nil
+        )
         viewModel = CandidatesListViewModel(service: mockService)
         viewModel.candidates = [candidate]
 
-        let updated = Candidate(id: "updateId", firstName: "Updated", lastName: "User", email: "", phone: "", note: nil, linkedInURL: nil)
+        let updated = Candidate(
+            id: "updateId",
+            firstName: "Updated",
+            lastName: "User",
+            email: "",
+            phone: "",
+            note: nil,
+            linkedInURL: nil
+        )
         let expectation = XCTestExpectation(description: "Update candidate")
 
         viewModel.updateCandidate(updated, token: "token")

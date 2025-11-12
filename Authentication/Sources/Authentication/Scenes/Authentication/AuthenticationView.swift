@@ -103,7 +103,7 @@ public struct AuthenticationView: View {
                 set: { isActive in if !isActive { viewModel.token = nil } }
             )) {
                 CandidatesView(token: viewModel.token ?? "", isAdmin: viewModel.isAdmin)
-                }
+            }
         }
     }
 }

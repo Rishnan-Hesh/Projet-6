@@ -59,8 +59,10 @@ final class CandidateDetailsViewModelTests: XCTestCase {
     }
 
     func test_updateCandidateLocal_setsCandidate() {
-        let newCandidate = Candidate(id: "1", firstName: "Alice", lastName: "Martin", email: "alice@x.com", phone: nil, note: nil, linkedInURL: nil)
+        let newCandidate = Candidate(id: "1", firstName: "Alice", lastName: "Poe", email: "alice.poe@gmail.com", phone: nil, note: nil, linkedInURL: nil)
         viewModel.updateCandidateLocal(newCandidate)
         XCTAssertEqual(viewModel.candidate.firstName, "Alice")
+        XCTAssertEqual(viewModel.candidate.lastName, "Poe")
+        XCTAssertEqual(viewModel.candidate.email, "alice.poe@gmail.com")
     }
 }

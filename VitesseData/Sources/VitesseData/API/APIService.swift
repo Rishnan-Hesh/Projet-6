@@ -102,6 +102,7 @@ public final class APIService {
         }.resume()
     }
     
+    //MARK: - DELETE
     public func deleteCandidate(
         candidateId: String,
         token: String,
@@ -136,6 +137,7 @@ public final class APIService {
         }.resume()
     }
     
+    //MARK: - UPDATE
     public func updateCandidate(
         candidate: Candidate,
         token: String,
@@ -176,6 +178,7 @@ public final class APIService {
         }.resume()
     }
     
+    //MARK: - CREATE
     public func createCandidate(
         candidate: Candidate,
         token: String,

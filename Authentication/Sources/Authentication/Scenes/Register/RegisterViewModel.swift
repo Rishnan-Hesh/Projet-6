@@ -12,23 +12,24 @@ final class RegisterViewModel: ObservableObject, @unchecked Sendable {
     @Published var confirmPassword: String = ""
     @Published var isLoading: Bool = false
     @Published var registerErrorMessage: String? = nil
-
+    
     private let registerUserClosure: (RegisterRequest, @escaping (Result<Void, Error>) -> Void) -> Void
-
+    
     // L'init standard pour la prod
     init(apiService: APIService = .shared) {
         self.registerUserClosure = apiService.registerUser
     }
-
+    
     // Init pour les tests/mock
     init(registerUserClosure: @escaping (RegisterRequest, @escaping (Result<Void, Error>) -> Void) -> Void) {
         self.registerUserClosure = registerUserClosure
     }
-
+    
+    //MARK: - SIGNUP
     func signUp(completion: @escaping (Bool) -> Void) {
         registerErrorMessage = nil
         isLoading = true
-
+        
         let registerRequest = RegisterRequest(email: email, password: password, firstName: firstName, lastName: lastName)
         registerUserClosure(registerRequest) { [weak self] result in
             Task { @MainActor in
@@ -43,7 +44,8 @@ final class RegisterViewModel: ObservableObject, @unchecked Sendable {
             }
         }
     }
-
+    
+    //MARK: - PASSWORD
     var passwordsMatch: Bool {
         return password == confirmPassword && !password.isEmpty
     }
