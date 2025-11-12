@@ -10,9 +10,6 @@ let package = Package(
             name: "VitesseDomain",
             targets: ["VitesseDomain"]),
     ],
-    
-    dependencies: [
-        .package(path: "../VitesseData")],
         
     targets: [
 

@@ -4,8 +4,18 @@ import VitesseDomain
 import VitesseData
 
 @MainActor
+public protocol AuthenticationServiceProtocol {
+    func authenticate(
+        email: String,
+        password: String,
+        completion: @escaping @Sendable (Result<AuthResponse, Error>) -> Void
+    )
+}
+
+extension APIService: AuthenticationServiceProtocol {}
+
+@MainActor
 final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
-    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isLoginEnabled: Bool = false
@@ -15,12 +25,17 @@ final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
     @Published var isForgotPasswordError: Bool = false
     @Published var isAdmin: Bool = false
 
-    
+    private let apiService: AuthenticationServiceProtocol
+
+    init(apiService: AuthenticationServiceProtocol = APIService.shared) {
+        self.apiService = apiService
+    }
+
     // MARK: - SignIn
     func signIn() {
         loginErrorMessage = nil
         isLoading = true
-        APIService.shared.authenticate(email: email, password: password) { [weak self] result in
+        apiService.authenticate(email: email, password: password) { [weak self] result in
             switch result {
             case .success(let response):
                 let token = response.token
@@ -38,17 +53,17 @@ final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
             }
         }
     }
-    
+
     // MARK: - Forgot Password
     func forgotPassword() {
         isForgotPasswordError = true
     }
-    
+
     func resetErrors() {
         loginErrorMessage = nil
         isForgotPasswordError = false
     }
-    
+
     // MARK: - Email valide
     static func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"

@@ -5,8 +5,12 @@ import VitesseDomain
 public final class APIService {
     public static let shared = APIService()
     private let baseURL = URL(string: "http://127.0.0.1:8080")!
-    
-    private init() { }
+    private let urlSession: URLSession
+
+    // Init pour app et tests
+    public init(urlSession: URLSession = .shared) {
+        self.urlSession = urlSession
+    }
     
     // MARK: - User Auth (post)
     public func authenticate(
@@ -20,7 +24,7 @@ public final class APIService {
         let body = AuthRequest(email: email, password: password)
         request.httpBody = try? JSONEncoder().encode(body)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[Auth] Erreur réseau : \(error)")
                 completion(.failure(error))
@@ -45,7 +49,6 @@ public final class APIService {
         }.resume()
     }
     
-    
     // MARK: - Get Candidate
     public func fetchCandidates(
         token: String,
@@ -55,7 +58,7 @@ public final class APIService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[GET] Network error : \(error)")
                 completion(.failure(error))
@@ -80,18 +83,17 @@ public final class APIService {
         }.resume()
     }
     
-    
     // MARK: - Register
     public func registerUser(
         request: RegisterRequest,
-        completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
+        completion: @escaping (Result<Void, Error>) -> Void) {
         let endpoint = baseURL.appendingPathComponent("user/register")
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.httpBody = try? JSONEncoder().encode(request)
-        
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            
+        urlSession.dataTask(with: urlRequest) { data, response, error in
             if let httpResp = response as? HTTPURLResponse, httpResp.statusCode == 201 {
                 completion(.success(()))
             } else {
@@ -99,7 +101,6 @@ public final class APIService {
             }
         }.resume()
     }
-    
     
     public func deleteCandidate(
         candidateId: String,
@@ -113,7 +114,7 @@ public final class APIService {
         request.httpMethod = "DELETE"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[DELETE] Erreur réseau : \(error)")
                 completion(.failure(error))
@@ -127,7 +128,6 @@ public final class APIService {
             } else {
                 print("[DELETE] Pas de data reçue")
             }
-            // succès sur HTTP 200 ou 204
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 204 {
                 completion(.success(()))
             } else {
@@ -136,14 +136,12 @@ public final class APIService {
         }.resume()
     }
     
-    
     public func updateCandidate(
         candidate: Candidate,
         token: String,
         completion: @escaping @Sendable (Result<Candidate, Error>) -> Void
     ) {
         guard let url = URL(string: "http://127.0.0.1:8080/candidate/\(candidate.id)") else {
-
             completion(.failure(URLError(.badURL)))
             return
         }
@@ -153,7 +151,7 @@ public final class APIService {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.httpBody = try? JSONEncoder().encode(candidate)
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[PUT] Erreur réseau : \(error)")
                 completion(.failure(error))
@@ -177,8 +175,6 @@ public final class APIService {
             }
         }.resume()
     }
-
-    
     
     public func createCandidate(
         candidate: Candidate,
@@ -192,7 +188,7 @@ public final class APIService {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.httpBody = try? JSONEncoder().encode(candidate)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("[POST] Erreur réseau : \(error)")
                 completion(.failure(error))
@@ -217,3 +213,4 @@ public final class APIService {
         }.resume()
     }
 }
+

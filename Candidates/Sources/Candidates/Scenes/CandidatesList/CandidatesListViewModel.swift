@@ -3,6 +3,42 @@ import VitesseDomain
 import VitesseData
 
 @MainActor
+protocol CandidateServiceProtocol {
+    func createCandidate(
+        candidate: Candidate,
+        token: String,
+        completion: @escaping @Sendable (Result<Candidate, Error>) -> Void
+    )
+    func fetchCandidates(
+        token: String,
+        completion: @escaping @Sendable (Result<[Candidate], Error>) -> Void
+    )
+    func deleteCandidate(
+        candidateId: String,
+        token: String,
+        completion: @escaping @Sendable (Result<Void, Error>) -> Void
+    )
+    func updateCandidate(
+        candidate: Candidate,
+        token: String,
+        completion: @escaping @Sendable (Result<Candidate, Error>) -> Void
+    )
+}
+
+
+// pour utiliser le vrai service en prod
+extension APIService: CandidateServiceProtocol {}
+
+//mock pour tester en injection dans le ViewModel
+final class MockCandidateService: CandidateServiceProtocol {
+
+    func createCandidate(candidate: Candidate, token: String, completion: @escaping (Result<Candidate, Error>) -> Void) { }
+    func fetchCandidates(token: String, completion: @escaping (Result<[Candidate], Error>) -> Void) { }
+    func deleteCandidate(candidateId: String, token: String, completion: @escaping (Result<Void, Error>) -> Void) { }
+    func updateCandidate(candidate: Candidate, token: String, completion: @escaping (Result<Candidate, Error>) -> Void) { }
+}
+
+@MainActor
 final class CandidatesListViewModel: ObservableObject {
     @Published var candidates: [Candidate] = []
     @Published var localFavorites: Set<String> = []
@@ -10,7 +46,7 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isEditing: Bool = false
     @Published var searchText: String = ""
-    @Published var showFavoritesOnly = false
+    @Published var showFavoritesOnly: Bool = false
     @Published var selection = Set<String>()
     @Published var isCreatingCandidate: Bool = false
     @Published var createCandidateErrorMessage: String? = nil
@@ -22,7 +58,13 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var candidateLastName: String = ""
     @Published var candidatePhone: String = ""
     
-    //MARK: - CREATE
+    private let service: CandidateServiceProtocol
+
+    init(service: CandidateServiceProtocol = APIService.shared) {
+        self.service = service
+    }
+    
+    // MARK: - CREATE
     func createCandidate(token: String) {
         isCreatingCandidate = true
         createCandidateErrorMessage = nil
@@ -37,7 +79,7 @@ final class CandidatesListViewModel: ObservableObject {
             linkedInURL: candidateLinkedinURL
         )
 
-        APIService.shared.createCandidate(candidate: newCandidate, token: token) { [weak self] result in
+        service.createCandidate(candidate: newCandidate, token: token) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isCreatingCandidate = false
                 switch result {
@@ -56,7 +98,7 @@ final class CandidatesListViewModel: ObservableObject {
         }
     }
     
-    //MARK: - FILTER
+    // MARK: - FILTER
     var filteredCandidates: [Candidate] {
         var filtered = candidates
         if showFavoritesOnly {
@@ -74,7 +116,6 @@ final class CandidatesListViewModel: ObservableObject {
         return filtered
     }
 
-
     func toggleEditMode() {
         isEditing.toggle()
     }
@@ -91,10 +132,11 @@ final class CandidatesListViewModel: ObservableObject {
         }
     }
     
+    // MARK: - LOAD
     func loadCandidates(token: String) {
         isLoading = true
         errorMessage = nil
-        APIService.shared.fetchCandidates(token: token) { [weak self] result in
+        service.fetchCandidates(token: token) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {
@@ -107,7 +149,7 @@ final class CandidatesListViewModel: ObservableObject {
         }
     }
 
-    //MARK: -DELETE
+    // MARK: - DELETE
     func deleteCandidates(withIds ids: Set<String>, token: String) {
         isLoading = true
         errorMessage = nil
@@ -116,7 +158,7 @@ final class CandidatesListViewModel: ObservableObject {
 
         for id in ids {
             group.enter()
-            APIService.shared.deleteCandidate(candidateId: id, token: token) { [weak self] result in
+            service.deleteCandidate(candidateId: id, token: token) { [weak self] result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
@@ -146,10 +188,11 @@ final class CandidatesListViewModel: ObservableObject {
         deleteCandidates(withIds: [id], token: token)
     }
     
+    // MARK: - UPDATE
     func updateCandidate(_ candidate: Candidate, token: String) {
         isLoading = true
         errorMessage = nil
-        APIService.shared.updateCandidate(candidate: candidate, token: token) { [weak self] result in
+        service.updateCandidate(candidate: candidate, token: token) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
                 switch result {
@@ -163,7 +206,6 @@ final class CandidatesListViewModel: ObservableObject {
             }
         }
     }
-
 
     func toggleSelection(_ candidate: Candidate) {
         if selection.contains(candidate.id) {
@@ -183,3 +225,4 @@ final class CandidatesListViewModel: ObservableObject {
         }
     }
 }
+
