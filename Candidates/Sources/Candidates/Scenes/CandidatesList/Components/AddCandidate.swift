@@ -9,18 +9,18 @@ struct AddCandidateForm: View {
     var body: some View {
         VStack(spacing: 24) {
             
-            Text("Ajouter un candidat")
+            Text("Add Candidate")
                 .font(.headline)
                 .padding(.top, 32)
             
             VStack(spacing: 16) {
                 Group {
-                    TextField("Prénom", text: $viewModel.candidateFirstName)
-                    TextField("Nom", text: $viewModel.candidateLastName)
+                    TextField("Name", text: $viewModel.candidateFirstName)
+                    TextField("Surname", text: $viewModel.candidateLastName)
                     TextField("Email", text: $viewModel.candidateEmail)
-                    TextField("Téléphone", text: $viewModel.candidatePhone)
+                    TextField("Phone", text: $viewModel.candidatePhone)
                     TextField("Note", text: bindingOptional($viewModel.candidateNote))
-                    TextField("Lien LinkedIn", text: bindingOptional($viewModel.candidateLinkedinURL))
+                    TextField("LinkedIn link", text: bindingOptional($viewModel.candidateLinkedinURL))
                 }
                 .padding(12)
                 .background(Color(.systemGray6))
@@ -38,7 +38,7 @@ struct AddCandidateForm: View {
                 viewModel.createCandidate(token: token)
                 presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Créer")
+                Text("Create")
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity)
                     .padding()

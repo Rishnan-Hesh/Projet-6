@@ -32,9 +32,9 @@ public struct CandidatesView: View {
         }
         .alert(isPresented: $showDeleteAlert) {
             Alert(
-                title: Text("Confirmer la suppression"),
-                message: Text("Supprimer les candidats sélectionnés ?"),
-                primaryButton: .destructive(Text("Supprimer")) {
+                title: Text("Confirm suppression"),
+                message: Text("Delete selected candidates ?"),
+                primaryButton: .destructive(Text("Delete")) {
                     viewModel.deleteCandidates(withIds: viewModel.selection, token: token)
                     viewModel.selection.removeAll()
                 },
@@ -60,7 +60,7 @@ public struct CandidatesView: View {
             if viewModel.isEditing {
                 Button("Delete") { showDeleteAlert = true }
                     .disabled(viewModel.selection.isEmpty)
-                Button("Ajouter") { showAddCandidateForm = true }
+                Button("Add") { showAddCandidateForm = true }
             } else {
                 Button(action: { viewModel.showFavoritesOnly.toggle() }) {
                     Image(systemName: viewModel.showFavoritesOnly ? "star.fill" : "star")
@@ -85,7 +85,7 @@ public struct CandidatesView: View {
 
     // Loader central
     private var loader: some View {
-        ProgressView("Chargement...")
+        ProgressView("Loading...")
             .padding()
     }
 
@@ -140,6 +140,7 @@ public struct CandidatesView: View {
             .buttonStyle(PlainButtonStyle())
         }
         .padding()
+        .frame(maxWidth: 380)
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color(.systemBackground))

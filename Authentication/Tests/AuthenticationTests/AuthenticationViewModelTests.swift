@@ -68,7 +68,7 @@ final class AuthenticationViewModelTests: XCTestCase {
         viewModel.signIn()
         let expectation = XCTestExpectation(description: "Wait for sign-in failure")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            XCTAssertEqual(self.viewModel.loginErrorMessage, "Identifiants incorrects ou erreur réseau")
+            XCTAssertEqual(self.viewModel.loginErrorMessage, "Wrong Id ou Network failure")
             XCTAssertFalse(self.viewModel.isLoading)
             XCTAssertNil(self.viewModel.token)
             expectation.fulfill()

@@ -40,7 +40,7 @@ final class CandidateDetailsViewModel: ObservableObject {
                     self.candidate = updatedCandidate
                     completion(.success(updatedCandidate))
                 case .failure(let error):
-                    self.errorMessage = "Erreur lors de la modification"
+                    self.errorMessage = "Something went wrong. Please try again."
                     completion(.failure(error))
                 }
             }

@@ -62,17 +62,21 @@ public struct RegisterView: View {
                     }
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color(.systemGray4))
+            .font(.system(size: 20, weight: .bold))
             .foregroundColor(.black)
-            .cornerRadius(8)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 70)
+            .background(Color.white)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.primary, lineWidth: 1)
+            )
             .disabled(viewModel.isLoading || !viewModel.passwordsMatch)
             
             
         }
         .padding(.horizontal, 24)
-        .padding(.top, 50)
         .navigationDestination(isPresented: $registrationSuccess) {
             AuthenticationView()
         }

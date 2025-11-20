@@ -10,6 +10,7 @@ public struct AuthenticationButton: View {
             Text(title)
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.black)
+                .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 70)
                 .background(Color.white)

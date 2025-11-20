@@ -63,7 +63,7 @@ final class CandidatesListViewModelTests: XCTestCase {
         viewModel.loadCandidates(token: "token")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertTrue(self.viewModel.candidates.isEmpty)
-            XCTAssertEqual(self.viewModel.errorMessage, "Impossible de charger les candidats")
+            XCTAssertEqual(self.viewModel.errorMessage, "Unable to load candidates")
             expectation.fulfill()
         }
         await fulfillment(of: [expectation], timeout: 1)

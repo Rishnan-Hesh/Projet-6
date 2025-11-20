@@ -38,7 +38,7 @@ final class RegisterViewModel: ObservableObject, @unchecked Sendable {
                 case .success:
                     completion(true)
                 case .failure:
-                    self?.registerErrorMessage = "Erreur lors de la création du compte"
+                    self?.registerErrorMessage = "Error during account creation."
                     completion(false)
                 }
             }

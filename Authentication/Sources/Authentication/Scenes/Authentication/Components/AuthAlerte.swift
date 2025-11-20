@@ -9,11 +9,11 @@ public enum AlertType: Identifiable {
         }
     }
 
-    var title: String { "Erreur" }
+    var title: String { "Error" }
 
     var message: String {
         switch self {
-        case .forgotPassword: return "Contactez le support"
+        case .forgotPassword: return "Contact support"
         case .loginError(let message): return message
         }
     }

@@ -48,7 +48,7 @@ final class AuthenticationViewModel: ObservableObject, @unchecked Sendable {
                 }
             case .failure:
                 Task { @MainActor in
-                    self?.loginErrorMessage = "Identifiants incorrects ou erreur réseau"
+                    self?.loginErrorMessage = "Wrong ID or Nertwork error"
                     self?.isLoading = false
                 }
             }

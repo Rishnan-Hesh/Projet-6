@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "FBA57D36-6092-452D-A66C-3FB00F7272E1",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/Authentication",
+        "identifier" : "AuthenticationTests",
+        "name" : "AuthenticationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

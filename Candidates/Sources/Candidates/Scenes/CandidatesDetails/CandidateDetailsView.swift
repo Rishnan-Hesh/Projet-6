@@ -29,13 +29,15 @@ public struct CandidateDetailsView: View {
         self.onSave = onSave
         self.isAdmin = isAdmin
         self._isEditing = isEditing
-        _firstName = State(initialValue: candidate.firstName)
-        _lastName = State(initialValue: candidate.lastName)
-        _email = State(initialValue: candidate.email)
-        _phone = State(initialValue: candidate.phone ?? "")
-        _note = State(initialValue: candidate.note ?? "")
-        _linkedInURL = State(initialValue: candidate.linkedInURL ?? "")
-        _isFavorite = State(initialValue: isFavorite)
+        self.isFavorite = isFavorite
+        
+        firstName = candidate.firstName
+        lastName = candidate.lastName
+        email = candidate.email
+        phone = candidate.phone ?? ""
+        note = candidate.note ?? ""
+        linkedInURL = candidate.linkedInURL ?? ""
+        
     }
 
     // MARK: - BODY
@@ -65,7 +67,7 @@ public struct CandidateDetailsView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 if isEditing {
-                    TextField("Téléphone", text: $phone)
+                    TextField("Phone", text: $phone)
                         .padding(8)
                         .background(
                             RoundedRectangle(cornerRadius: 8)
@@ -141,7 +143,7 @@ public struct CandidateDetailsView: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(isEditing ? "Enregistrer" : "Modifier") {
+                Button(isEditing ? "Save" : "Edit") {
                     if isEditing {
                         var updated = candidate
                         updated.firstName = firstName

@@ -54,7 +54,7 @@ final class CandidateDetailsViewModelTests: XCTestCase {
         }
 
         await fulfillment(of: [expectation], timeout: 1.0)
-        XCTAssertEqual(viewModel.errorMessage, "Erreur lors de la modification")
+        XCTAssertEqual(viewModel.errorMessage, "Error during modification")
         XCTAssertFalse(viewModel.isLoading)
     }
 

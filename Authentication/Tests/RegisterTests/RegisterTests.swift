@@ -37,7 +37,7 @@ final class RegisterViewModelTests: XCTestCase {
         viewModel.confirmPassword = "password123"
         XCTAssertTrue(viewModel.passwordsMatch)
 
-        viewModel.confirmPassword = "different"
+        viewModel.confirmPassword = "Password not matched"
         XCTAssertFalse(viewModel.passwordsMatch)
 
         viewModel.password = ""
@@ -84,7 +84,7 @@ final class RegisterViewModelTests: XCTestCase {
         viewModel.signUp { success in
             XCTAssertFalse(success)
             XCTAssertFalse(self.viewModel.isLoading)
-            XCTAssertEqual(self.viewModel.registerErrorMessage, "Erreur lors de la création du compte")
+            XCTAssertEqual(self.viewModel.registerErrorMessage, "Something hapened, please try again.")
             expectation.fulfill()
         }
         await fulfillment(of: [expectation], timeout: 1)

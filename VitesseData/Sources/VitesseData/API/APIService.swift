@@ -26,7 +26,7 @@ public final class APIService {
         
         urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("[Auth] Erreur réseau : \(error)")
+                print("[Auth] Network failure : \(error)")
                 completion(.failure(error))
                 return
             }
@@ -36,14 +36,14 @@ public final class APIService {
             if let data = data {
                 print("[Auth] Payload brut : \(String( data: data, encoding: .utf8) ?? "nil")")
                 if let result = try? JSONDecoder().decode(AuthResponse.self, from: data) {
-                    print("[Auth] Décodé : \(result)")
+                    print("[Auth] Decoded : \(result)")
                     completion(.success(result))
                 } else {
-                    print("[Auth] Erreur decoding : \(data)")
+                    print("[Auth] Decoding error : \(data)")
                     completion(.failure(URLError(.cannotParseResponse)))
                 }
             } else {
-                print("[Auth] Pas de data reçue")
+                print("[Auth] No data")
                 completion(.failure(URLError(.badServerResponse)))
             }
         }.resume()
@@ -117,7 +117,7 @@ public final class APIService {
         
         urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("[DELETE] Erreur réseau : \(error)")
+                print("[DELETE] Network error : \(error)")
                 completion(.failure(error))
                 return
             }
@@ -127,7 +127,7 @@ public final class APIService {
             if let data = data {
                 print("[DELETE] Payload brut : \(String( data: data, encoding: .utf8) ?? "nil")")
             } else {
-                print("[DELETE] Pas de data reçue")
+                print("[DELETE] No data")
             }
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 204 {
                 completion(.success(()))
@@ -155,7 +155,7 @@ public final class APIService {
 
         urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("[PUT] Erreur réseau : \(error)")
+                print("[PUT] Network failure : \(error)")
                 completion(.failure(error))
                 return
             }
@@ -165,14 +165,14 @@ public final class APIService {
             if let data = data {
                 print("[PUT] Payload brut : \(String( data: data, encoding: .utf8) ?? "nil")")
                 if let updated = try? JSONDecoder().decode(Candidate.self, from: data) {
-                    print("[PUT] Décodé : \(updated)")
+                    print("[PUT] Decoded : \(updated)")
                     completion(.success(updated))
                 } else {
-                    print("[PUT] Erreur decoding : \(data)")
+                    print("[PUT] Decoding error : \(data)")
                     completion(.failure(URLError(.cannotParseResponse)))
                 }
             } else {
-                print("[PUT] Pas de data reçue")
+                print("[PUT] No data")
                 completion(.failure(URLError(.badServerResponse)))
             }
         }.resume()
@@ -193,7 +193,7 @@ public final class APIService {
         
         urlSession.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("[POST] Erreur réseau : \(error)")
+                print("[POST] Network failure : \(error)")
                 completion(.failure(error))
                 return
             }
@@ -203,14 +203,14 @@ public final class APIService {
             if let data = data {
                 print("[POST] Payload brut : \(String( data: data, encoding: .utf8) ?? "nil")")
                 if let created = try? JSONDecoder().decode(Candidate.self, from: data) {
-                    print("[POST] Décodé : \(created)")
+                    print("[POST] Decoded : \(created)")
                     completion(.success(created))
                 } else {
-                    print("[POST] Erreur decoding : \(data)")
+                    print("[POST] Decoding error : \(data)")
                     completion(.failure(URLError(.cannotParseResponse)))
                 }
             } else {
-                print("[POST] Pas de data reçue")
+                print("[POST] Not data")
                 completion(.failure(URLError(.badServerResponse)))
             }
         }.resume()
