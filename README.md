@@ -6,3 +6,9 @@ Le compte administrateur peut également les ajouter en favoris pour les retrouv
 
 API nécessaire au projet : 
 "https://github.com/OpenClassrooms-Student-Center/Cr-ez-une-application-iOS-en-MVVM-de-A-Z.git"
+
+
+Documents: 
+https://course.oc-static.com/projects/DA_iOS_FR/P6_iOS/Spécifications+Techniques+-+Vitesse+-+iOS+.pdf
+https://openclassrooms.notion.site/edb567e405e54359b080c0b8ace97843?v=950a6220aca842afa184c9ec3cbc4206
+https://raw.githubusercontent.com/OpenClassrooms-Student-Center/Cr-ez-une-application-iOS-en-MVVM-de-A-Z/master/Designs/Wireframe.png
